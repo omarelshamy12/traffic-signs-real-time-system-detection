@@ -27,14 +27,14 @@ while True:
     img = np.asarray(imgOrignal)
     img = cv2.resize(img, (32, 32))
     img = np.sum(img/3, axis=2, keepdims = True)
-    # img = preprocessing(img)
+
     # cv2.imshow("Processed Image", img)
-    # img = img.reshape(1, 32, 32, 1)
+
     cv2.putText(imgOrignal, "CLASS: ", (20, 35), font, 0.75, (0, 0, 255), 2, cv2.LINE_AA)
     cv2.putText(imgOrignal, "PROBABILITY: ", (20, 75), font, 0.75, (0, 0, 255), 2, cv2.LINE_AA)
     # PREDICT IMAGE
     predictions = model.predict(img.reshape(1, 32, 32, 1))
-    # classIndex = model.predict_classes(img.reshape(1, 32, 32, 1))
+    
 
     y_classes = [np.argmax(element) for element in predictions]
     probabilityValue = np.amax(predictions)
@@ -44,6 +44,5 @@ while True:
                     cv2.LINE_AA)
         cv2.putText(imgOrignal, str(round(probabilityValue * 100, 2)) + "%", (180, 75), font, 0.75, (0, 0, 255), 2, cv2.LINE_AA)
         cv2.imshow("Result", imgOrignal)
-
     if cv2.waitKey(1) and 0xFF == ord('q'):
         break
